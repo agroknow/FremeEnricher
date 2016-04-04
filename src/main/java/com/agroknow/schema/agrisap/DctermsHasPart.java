@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.agroknow.process.AdapterCDATA;
+
 
 /**
  * 
@@ -31,6 +33,7 @@ public class DctermsHasPart {
     @XmlAttribute(name = "scheme", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String scheme;
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
     @XmlValue
     protected String value;
 

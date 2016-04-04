@@ -13,6 +13,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import com.agroknow.process.AdapterCDATA;
 
 
 /**
@@ -24,7 +27,7 @@ import javax.xml.bind.annotation.XmlValue;
 })
 @XmlRootElement(name = "ags:publisherPlace")
 public class AgsPublisherPlace {
-
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
     @XmlValue
     protected String value;
 

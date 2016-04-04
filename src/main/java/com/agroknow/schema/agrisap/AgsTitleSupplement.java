@@ -17,6 +17,8 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.agroknow.process.AdapterCDATA;
+
 
 /**
  * 
@@ -31,6 +33,7 @@ public class AgsTitleSupplement {
     @XmlAttribute(name = "xml:lang")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String xmlLang;
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
     @XmlValue
     protected String value;
 

@@ -23,7 +23,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.agroknow.process.AdapterCDATA;
 import com.agroknow.process.Annotatable;
 
 
@@ -34,7 +36,7 @@ import com.agroknow.process.Annotatable;
 @XmlType(name = "", propOrder = { "value" } )
 @XmlRootElement(name = "ags:creatorPersonal")
 public class AgsCreatorPersonal implements Annotatable {
-
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
 	@XmlValue
     protected String value;
 	

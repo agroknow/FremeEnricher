@@ -4,16 +4,15 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.FileHandler;
 import java.util.logging.Formatter;
-import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -24,6 +23,7 @@ import javax.xml.bind.UnmarshallerHandler;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.commons.lang3.LocaleUtils;
 import org.xml.sax.InputSource;
 import org.xml.sax.XMLReader;
 
@@ -43,6 +43,8 @@ import com.agroknow.schema.agrisap.DcSubject;
 import com.agroknow.schema.agrisap.DctermsAbstract;
 import com.agroknow.schema.agrisap.DctermsSpatial;
 
+import com.sun.xml.internal.bind.marshaller.CharacterEscapeHandler;  
+
 public class AgrisApProcessor implements DocumentProcessor {
 	
 	File file;
@@ -61,6 +63,7 @@ public class AgrisApProcessor implements DocumentProcessor {
 	XMLReader reader;
 	List<FREMEAnnotation> annotations;
 	
+	
 	public AgrisApProcessor(File file) {
 		super();
 		this.file = file;
@@ -70,6 +73,7 @@ public class AgrisApProcessor implements DocumentProcessor {
 	public void initializeProcessor(File file) {
 		
 		try {
+		
 			
 			File folder = new File( file.getParent()+"/results/" );
 		    if (!folder.exists()) {
@@ -112,14 +116,21 @@ public class AgrisApProcessor implements DocumentProcessor {
 	public void enrichSubjects() {
 		FREMEClient client = new FREMEClient("e-terminology/tilde");
 		client.setLogger(logger);
-		List<Annotatable> subjectElements = new ArrayList<Annotatable>();
 		List<FREMEAnnotation> annotations = new ArrayList<FREMEAnnotation>();
 		logger.info("========================= Enriching subject elements in file: "+file.getName()+" ========================= ");
 		try {
 			
 			Marshaller marshaller = context.createMarshaller();
 		    marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-		    
+		    marshaller.setProperty( "com.sun.xml.internal.bind.characterEscapeHandler", new CharacterEscapeHandler() {  
+		    	   @Override  
+		    	   public void escape( char[] ac, int i, int j, boolean flag, Writer writer ) throws IOException  
+		    	   {  
+		    	    // do not escape  
+		    	    writer.write( ac, i, j );  
+		    	   }
+
+		     });  
 	        // Iterating through multiple <ags:resource> elements in the file
 	        for (int i = 0; i < resource.getAgsResource().size(); i++) {
 	        	
@@ -140,6 +151,8 @@ public class AgrisApProcessor implements DocumentProcessor {
 								language = "en";
 							}
 							else {
+								Locale b = LocaleUtils.toLocale(a.getXmlLang());
+								//System.out.println();
 								language = a.getXmlLang();
 							}
 			        		annotations.addAll(client.enrichSubjects( a, language ));
@@ -545,3 +558,5 @@ public class AgrisApProcessor implements DocumentProcessor {
 	 
 	
 }
+
+

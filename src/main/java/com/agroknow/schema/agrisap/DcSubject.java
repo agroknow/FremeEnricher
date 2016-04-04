@@ -13,14 +13,11 @@ import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
-import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import com.agroknow.process.Annotatable;
 
@@ -29,17 +26,15 @@ import com.agroknow.process.Annotatable;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "", propOrder = {
-	    "agsSubjectThesaurusOrAgsSubjectClassification"
-	})
+@XmlType(name = "", propOrder = { "agsSubjectThesaurusOrAgsSubjectClassification"})
 @XmlRootElement(name = "dc:subject")
 public class DcSubject implements Annotatable{
 
-	@XmlElements({
-        @XmlElement(name = "ags:subjectThesaurus", type = AgsSubjectThesaurus.class),
-        @XmlElement(name = "ags:subjectClassification", type = AgsSubjectClassification.class)
-    })
-	
+	@XmlMixed
+	@XmlElementRefs ({
+	  @XmlElementRef(name = "ags:subjectThesaurus", type = AgsSubjectThesaurus.class),
+	  @XmlElementRef(name = "ags:subjectClassification", type = AgsSubjectClassification.class)
+	})
 //    @XmlAttribute(name = "xml:lang")
 //    @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
 //    protected String xmlLang;

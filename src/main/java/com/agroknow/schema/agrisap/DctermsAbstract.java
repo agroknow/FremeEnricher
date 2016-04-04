@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlValue;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.agroknow.process.AdapterCDATA;
 import com.agroknow.process.Annotatable;
 
 
@@ -33,6 +34,7 @@ public class DctermsAbstract  implements Annotatable {
     @XmlAttribute(name = "xml:lang")
     @XmlJavaTypeAdapter(NormalizedStringAdapter.class)
     protected String xmlLang;
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
     @XmlValue
     protected String value;
 

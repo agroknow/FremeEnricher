@@ -18,6 +18,7 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.agroknow.process.AdapterCDATA;
 import com.agroknow.process.Annotatable;
 
 
@@ -37,6 +38,7 @@ public class AgsSubjectThesaurus implements Annotatable{
     @XmlAttribute(name = "scheme", required = true)
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String scheme;
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
     @XmlValue
     protected String value;
 

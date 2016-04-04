@@ -56,6 +56,7 @@ public class StartFreme
     	DocumentProcessorFactory processorFactory = new DocumentProcessorFactory();
     	
     	try {
+    		
     	    // parse the command line arguments
     	    CommandLine line = parser.parse( options, args );
 

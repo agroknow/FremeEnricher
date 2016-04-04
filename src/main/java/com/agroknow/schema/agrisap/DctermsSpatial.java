@@ -18,6 +18,8 @@ import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 import javax.xml.bind.annotation.adapters.NormalizedStringAdapter;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import com.agroknow.process.AdapterCDATA;
+
 
 /**
  * 
@@ -35,6 +37,7 @@ public class DctermsSpatial {
     @XmlAttribute(name = "scheme")
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String scheme;
+    @XmlJavaTypeAdapter(AdapterCDATA.class)
     @XmlValue
     protected String value;
 
